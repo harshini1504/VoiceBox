@@ -1,0 +1,120 @@
+/* ========= Core theme (light + dark) ========= */
+:root{
+    --bg: #f7f7f8;
+    --card: #ffffff;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e5e7eb;
+    --brand: #111827;
+    --brand-contrast: #ffffff;
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
+}
+
+@media (prefers-color-scheme: dark){
+    :root{
+        --bg: #0b0b0c;
+        --card: #111214;
+        --text: #e6e7eb;
+        --muted: #9aa3b2;
+        --border: #1f2023;
+        --brand: #f9fafb;
+        --brand-contrast: #111827;
+        --shadow: 0 1px 2px rgba(0,0,0,.5), 0 8px 24px rgba(0,0,0,.45);
+    }
+}
+
+*{ box-sizing: border-box }
+html,body{ height:100% }
+body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.45 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* ========= Layout ========= */
+.container{ max-width: 1040px; margin: 0 auto; padding: 24px }
+.header{
+    position: sticky; top:0; z-index:10;
+    backdrop-filter: saturate(180%) blur(8px);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    border-bottom: 1px solid var(--border);
+}
+.nav{
+    display:flex; align-items:center; gap:16px;
+    padding: 12px 24px; margin:0 auto; max-width:1040px;
+}
+.brand{ font-weight:600; font-size:18px; text-decoration:none; color:var(--text) }
+.nav a{ color:var(--muted); text-decoration:none; font-size:14px }
+.nav a:hover{ color:var(--text) }
+.spacer{ flex:1 }
+
+/* ========= Card & button ========= */
+.card{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px;
+}
+
+.btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background: var(--brand); color:var(--brand-contrast);
+    border: 1px solid var(--brand);
+    padding: 10px 14px; border-radius: 12px;
+    font-weight:600; cursor:pointer; transition: transform .06s ease, opacity .2s ease;
+}
+.btn:hover{ opacity:.9 }
+.btn:active{ transform: translateY(1px) }
+
+.btn-outline{
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border);
+}
+
+/* ========= Inputs ========= */
+.input, .textarea, .select{
+    width:100%; color:var(--text); background:var(--card);
+    border:1px solid var(--border); border-radius: 12px;
+    padding: 10px 12px; outline: none;
+}
+.textarea{ min-height: 96px; resize: vertical }
+
+/* ========= Feedback list ========= */
+.list{ display:grid; gap:12px }
+.row{ display:flex; gap:16px; align-items:flex-start }
+.vote{
+    border:1px solid var(--border); background:var(--card);
+    border-radius: 12px; padding: 8px 10px; min-width:56px;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    cursor:pointer;
+}
+.badges{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px }
+.badge{
+    font-size:12px; padding:4px 8px; border-radius:999px;
+    border:1px solid var(--border); color:var(--muted);
+}
+.badge.purple{ color:#7c3aed; border-color: color-mix(in srgb, #7c3aed 40%, var(--border)); }
+.badge.blue{ color:#2563eb; border-color: color-mix(in srgb, #2563eb 40%, var(--border)); }
+.badge.green{ color:#059669; border-color: color-mix(in srgb, #059669 40%, var(--border)); }
+.badge.orange{ color:#d97706; border-color: color-mix(in srgb, #d97706 40%, var(--border)); }
+.badge.gray{ color:#6b7280; border-color: color-mix(in srgb, #6b7280 40%, var(--border)); }
+
+.h1{ font-size:28px; font-weight:700; letter-spacing:-.01em; margin: 8px 0 16px }
+.h2{ font-size:18px; font-weight:600; margin: 8px 0 12px }
+.muted{ color:var(--muted) }
+
+.vote-btn {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    background: #1e293b; color: #ffffff;
+    border: 2px solid #3b82f6; border-radius: 10px;
+    padding: 6px 12px; font-weight: bold; font-size: 14px;
+    cursor: pointer; transition: background .2s, transform .1s;
+}
+.vote-btn:hover { background: #2563eb; color: #fff; }
+.vote-btn:active { transform: scale(0.95); }
+

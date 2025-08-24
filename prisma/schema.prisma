@@ -1,0 +1,97 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String     @id @default(cuid())
+  name          String?
+  email         String?    @unique
+  emailVerified DateTime?  // <— add this line
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  votes         Vote[]
+  isAdmin       Boolean    @default(false)
+  createdAt     DateTime   @default(now())
+  feedbacks     Feedback[] @relation("AuthorFeedback")
+}
+
+
+model Feedback {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    Category @default(FEATURE)
+  status      Status   @default(BACKLOG) // Backlog / Now / Next / Later / Done
+  tags        String[] // Postgres text[] (no @db on arrays)
+  author      User?    @relation("AuthorFeedback", fields: [authorId], references: [id])
+  authorId    String?
+  votes       Vote[]
+  score       Int      @default(0) // denormalized vote count
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Vote {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  feedback   Feedback @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
+  feedbackId String
+
+  @@unique([userId, feedbackId])
+}
+
+enum Category {
+  FEATURE
+  BUG
+  UX
+}
+
+enum Status {
+  BACKLOG
+  NOW
+  NEXT
+  LATER
+  DONE
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type              String
+  provider          String
+  providerAccountId String
+  access_token      String? @db.Text
+  token_type        String?
+  scope             String?
+  expires_at        Int?
+  refresh_token     String? @db.Text
+  id_token          String? @db.Text
+  session_state     String?
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires      DateTime
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
