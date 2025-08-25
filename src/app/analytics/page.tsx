@@ -19,7 +19,13 @@ Chart.register(ArcElement, BarElement, CategoryScale, LinearScale, Tooltip, Lege
 Chart.defaults.color = "#cbd5e1";
 Chart.defaults.borderColor = "rgba(148,163,184,.3)";
 
+// extended a bit so we can print the list nicely
 type Item = {
+    id?: string;
+    title?: string;
+    description?: string;
+    tags?: string[];
+    score?: number;
     status: "BACKLOG" | "NOW" | "NEXT" | "LATER" | "DONE";
     category: "FEATURE" | "BUG" | "UX";
 };
@@ -45,7 +51,7 @@ export default function AnalyticsPage() {
         [items]
     );
 
-    // ---- TYPES MATTER HERE ----
+    // ---- charts ----
     const barOptions: ChartOptions<"bar"> = {
         responsive: true,
         maintainAspectRatio: false,
@@ -57,7 +63,7 @@ export default function AnalyticsPage() {
     };
 
     const barData: ChartData<"bar", number[], string> = {
-        labels: [...statusLabels], // cast tuple -> string[]
+        labels: [...statusLabels],
         datasets: [
             {
                 label: "Count",
@@ -92,6 +98,23 @@ export default function AnalyticsPage() {
         ],
     };
 
+    // ---- NEW: group everything by status and print the list ----
+    const grouped = useMemo(() => {
+        const map: Record<Item["status"], Item[]> = {
+            BACKLOG: [], NOW: [], NEXT: [], LATER: [], DONE: [],
+        };
+        for (const it of items) map[it.status].push(it);
+        // sort each bucket by score desc then title
+        (Object.keys(map) as Item["status"][]).forEach((k) => {
+            map[k].sort(
+                (a, b) =>
+                    (b.score ?? 0) - (a.score ?? 0) ||
+                    (a.title ?? "").localeCompare(b.title ?? "")
+            );
+        });
+        return map;
+    }, [items]);
+
     return (
         <div className="container" style={{ paddingTop: 16 }}>
             <div className="card" style={{ height: 320, marginBottom: 16 }}>
@@ -107,6 +130,48 @@ export default function AnalyticsPage() {
                     <Pie data={pieData} options={pieOptions} />
                 </div>
             </div>
+
+            {/* NEW SECTION: full status breakdown list */}
+            <div style={{ height: 16 }} />
+            <div className="card">
+                <div className="h2" style={{ marginBottom: 8 }}>All feedback by status</div>
+
+                <div style={{ display: "grid", gap: 16 }}>
+                    {(["NOW","NEXT","LATER","BACKLOG","DONE"] as const).map((s) => (
+                        <div key={s}>
+                            <div style={{ fontWeight: 700, marginBottom: 6 }}>
+                                {s} <span className="muted">({grouped[s].length})</span>
+                            </div>
+
+                            {grouped[s].length === 0 ? (
+                                <div className="muted">No items</div>
+                            ) : (
+                                <div style={{ display: "grid", gap: 8 }}>
+                                    {grouped[s].map((it) => (
+                                        <div key={it.id ?? Math.random()} className="row" style={{ alignItems: "flex-start" }}>
+                                            <div className="badge" style={{ marginRight: 8 }}>{it.category}</div>
+                                            <div style={{ flex: 1 }}>
+                                                <div style={{ fontWeight: 600 }}>{it.title ?? "(untitled)"}</div>
+                                                {!!it.description && (
+                                                    <div className="muted" style={{ fontSize: 14 }}>{it.description}</div>
+                                                )}
+                                                {!!it.tags?.length && (
+                                                    <div className="badges" style={{ marginTop: 4 }}>
+                                                        {it.tags.map((t) => <span key={t} className="badge">{t}</span>)}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="badge" title="Upvotes">⬆️ {it.score ?? 0}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div style={{ height: 16 }} />
         </div>
     );
 }

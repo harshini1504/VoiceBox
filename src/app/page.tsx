@@ -10,6 +10,7 @@ export default function Home() {
             <FeedbackForm onCreated={() => { /* list reload handled in list */ }} />
             <h2 className="h1">Feedback board</h2>
             <FeedbackList />
+
         </>
     );
 }

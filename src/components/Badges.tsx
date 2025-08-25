@@ -1,20 +1,19 @@
 "use client";
 
-export default function Badges({
-                                   category, status, tags = [],
-                               }: { category?: string; status?: string; tags?: string[] }) {
-    const statusColor: Record<string,string> = {
-        BACKLOG:"gray", NOW:"green", NEXT:"blue", LATER:"orange", DONE:"purple"
-    };
-    const catColor: Record<string,string> = {
-        FEATURE:"blue", BUG:"orange", UX:"purple"
-    };
+type Props = {
+    category: "FEATURE" | "BUG" | "UX";
+    status: "BACKLOG" | "NOW" | "NEXT" | "LATER" | "DONE";
+    tags?: string[];
+};
 
+export default function Badges({ category, status, tags = [] }: Props) {
     return (
-        <div className="badges">
-            {category && <span className={`badge ${catColor[category] ?? "gray"}`}>{category}</span>}
-            {status && <span className={`badge ${statusColor[status] ?? "gray"}`}>{status}</span>}
-            {tags.map(t => <span key={t} className="badge">{t}</span>)}
+        <div className="badges" style={{ marginTop: 8, gap: 8, display: "flex", flexWrap: "wrap" }}>
+            <span className="badge" data-variant="category">{category}</span>
+            <span className="badge" data-variant="status">{status}</span>
+            {tags.map((t) => (
+                <span key={t} className="badge">{t}</span>
+            ))}
         </div>
     );
 }

@@ -4,11 +4,13 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 
 const handler = NextAuth({
+    debug: true, // helpful during setup
     adapter: PrismaAdapter(prisma),
     providers: [
         GitHub({
             clientId: process.env.GITHUB_ID!,
             clientSecret: process.env.GITHUB_SECRET!,
+            authorization: { params: { scope: "read:user user:email" } },
         }),
     ],
     callbacks: {
