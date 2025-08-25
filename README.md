@@ -1,4 +1,4 @@
-# 🎤 VoiceBox – Customer Feedback App
+# 🎤 VoiceBox – Customer Feedback Application
 
 A lightweight customer feedback management app where users can **sign in with GitHub**, submit feedback & feature requests, and upvote ideas from others.  
 Admins can update the **status** of each item (Backlog → Now → Next → Later → Done).  
@@ -6,6 +6,7 @@ Analytics dashboards show feedback trends by category and status.
 
  Built with **Next.js (App Router)**, **Prisma + Neon Postgres**, and **NextAuth**, deployed on **Vercel**.
 
+## Application link:  [https://voice-box.vercel.app](https://voice-box.vercel.app)  
 ---
 
 ## ✨ Features
@@ -38,7 +39,7 @@ Analytics dashboards show feedback trends by category and status.
 ###  Analytics
 ![Analytics Screenshot](./screenshots/analytics.png)
 
-###  Analytics
+###  Neon Console Tables
 ![Analytics Screenshot](./screenshots/analytics.png)
 
 *(Put your actual screenshots inside a `screenshots/` folder in the repo.)*
