@@ -44,7 +44,6 @@ Analytics dashboards show feedback trends by category and status.
 ###  Neon Console Tables
 ![Analytics Screenshot](./screenshots/tables.png)
 
-*(Put your actual screenshots inside a `screenshots/` folder in the repo.)*
 
 ---
 
