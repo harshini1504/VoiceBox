@@ -52,11 +52,11 @@ Analytics dashboards show feedback trends by category and status.
 git clone https://github.com/harshini1504/VoiceBox.git
 cd VoiceBox
 ```
-###2. Install dependencies
+### 2. Install dependencies
 ```bash
 npm install
 ```
-###3. Setup environment variables
+### 3. Setup environment variables
 Create a .env.local in the project root:
 ```
 DATABASE_URL="postgresql://<your-neon-db-url>"
@@ -66,12 +66,12 @@ NEXTAUTH_SECRET="your-secret-key"
 GITHUB_ID="your-oauth-client-id"
 GITHUB_SECRET="your-oauth-client-secret"
 ```
-###4. Setup database
+### 4. Setup database
 ```bash
 npx prisma migrate dev
 npx prisma generate
 ```
-###5. Run locally
+### 5. Run locally
 ```bash
 npm run dev
 ```
