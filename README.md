@@ -37,10 +37,12 @@ Analytics dashboards show feedback trends by category and status.
 ![Home Screenshot](./screenshots/home.png)
 
 ###  Analytics
-![Analytics Screenshot](./screenshots/analytics.png)
+![Analytics1 Screenshot](./screenshots/analytics1.png)
+![Analytics2 Screenshot](./screenshots/analytics2.png)
+
 
 ###  Neon Console Tables
-![Analytics Screenshot](./screenshots/analytics.png)
+![Analytics Screenshot](./screenshots/tables.png)
 
 *(Put your actual screenshots inside a `screenshots/` folder in the repo.)*
 
