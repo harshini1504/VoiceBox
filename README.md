@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎤 VoiceBox – Customer Feedback App
 
-## Getting Started
+A lightweight customer feedback management app where users can **sign in with GitHub**, submit feedback & feature requests, and upvote ideas from others.  
+Admins can update the **status** of each item (Backlog → Now → Next → Later → Done).  
+Analytics dashboards show feedback trends by category and status.  
 
-First, run the development server:
+ Built with **Next.js (App Router)**, **Prisma + Neon Postgres**, and **NextAuth**, deployed on **Vercel**.
 
+---
+
+## ✨ Features
+- 🔑 **GitHub login** via NextAuth
+- 💡 Submit new feedback / feature requests
+- 👍 Upvote existing feedback : One upvote per user (prevents spam voting)
+- 👩‍💼 Product managers can update status (Backlog → Now → Next → Later → Done) through Neon Console (Neon PostgreSQL) 
+- 📊 Track progress with statuses (Backlog, Now, Next, Later, Done)
+- **Analytics Dashboard** –  
+  - Bar chart: Items by status  
+  - Pie chart: Items by category  
+- 🎨 Clean UI with feedback cards, tags, and filters
+
+---
+
+## 🛠️ Tech Stack
+- **Frontend:** Next.js 15 (App Router), React
+- **Backend:** Prisma ORM + Neon Postgres
+- **Auth:** NextAuth.js (GitHub OAuth)
+- **Charts:** React Chart.js 2
+- **Deployment:** Vercel
+
+---
+
+## 📸 Screenshots
+
+### Home / Feedback Board
+![Home Screenshot](./screenshots/home.png)
+
+###  Analytics
+![Analytics Screenshot](./screenshots/analytics.png)
+
+###  Analytics
+![Analytics Screenshot](./screenshots/analytics.png)
+
+*(Put your actual screenshots inside a `screenshots/` folder in the repo.)*
+
+---
+
+##  Local Development Setup
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/harshini1504/VoiceBox.git
+cd VoiceBox
+```
+###2. Install dependencies
+```bash
+npm install
+```
+###3. Setup environment variables
+Create a .env.local in the project root:
+```
+DATABASE_URL="postgresql://<your-neon-db-url>"
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret-key"
+
+GITHUB_ID="your-oauth-client-id"
+GITHUB_SECRET="your-oauth-client-secret"
+```
+###4. Setup database
+```bash
+npx prisma migrate dev
+npx prisma generate
+```
+###5. Run locally
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Now open → http://localhost:3000
+ 🎉
